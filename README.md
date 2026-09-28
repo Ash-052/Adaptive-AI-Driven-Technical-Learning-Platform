@@ -121,6 +121,16 @@ npm run dev
 
 The Vite development server prints the local URL when it starts.
 
+## Deploy on Render
+
+The repository includes a `render.yaml` Blueprint that builds the React frontend and serves it with FastAPI from one web service.
+
+1. Open [Render Blueprints](https://dashboard.render.com/blueprints) and create a Blueprint from this repository.
+2. Set `SUPABASE_URL` and `SUPABASE_KEY` in the service environment to keep accounts and progress in a persistent database. Set `OPENAI_API_KEY` to enable AI tutor features.
+3. Apply the Blueprint and wait for the service health check to pass. Render will show the public URL.
+
+The free web service may sleep while idle, and its local filesystem is temporary. Do not use the local SQLite fallback for persistent hosted user data; configure Supabase before sharing the app.
+
 ---
 
 ## Environment Variables

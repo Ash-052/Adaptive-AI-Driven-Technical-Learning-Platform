@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: adaptive-learning-platform
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && npm ci --prefix frontend && npm run build --prefix frontend
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
