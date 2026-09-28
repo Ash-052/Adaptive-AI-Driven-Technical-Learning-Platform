@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+pydantic
+pydantic-settings
+supabase
+python-dotenv==1.0.1
+torch>=2.6.0
+scikit-learn
+pandas
+numpy
+matplotlib
+seaborn
+openai
+httpx
+passlib[bcrypt]
+python-jose[cryptography]
+email-validator

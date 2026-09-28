@@ -18,6 +18,10 @@ The system analyzes a student's coding performance and dynamically recommends pr
 - FastAPI REST APIs
 - Responsive React frontend
 - Supabase database integration
+- Supabase database integration with local SQLite fallback
+- Topic mastery that starts at 0% and grows with problem-solving accuracy
+- Function-based coding challenges with examples, constraints, and test cases
+- Python, JavaScript, C, C++, Java, Go, Rust, and C# editor templates
 
 ---
 
@@ -84,24 +88,24 @@ Adaptive/
 ## Installation
 
 ### Clone Repository
-
 ```bash
-git clone https://github.com/yourusername/AI-Tutor-Adaptive-Programming-Practice.git
+git clone https://github.com/Ash-052/Adaptive-AI-Driven-Technical-Learning-Platform.git
+cd Adaptive-AI-Driven-Technical-Learning-Platform
 ```
 
 ### Backend
 
 ```bash
+python -m venv .venv
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+# macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Run backend
+Create a `.env` file for Supabase and OpenAI credentials, or use the local SQLite fallback where supported.
 
-```bash
-python main.py
-```
-
-or
+Run the backend from the repository root:
 
 ```bash
 uvicorn main:app --reload
@@ -114,6 +118,8 @@ cd frontend
 npm install
 npm run dev
 ```
+
+The Vite development server prints the local URL when it starts.
 
 ---
 

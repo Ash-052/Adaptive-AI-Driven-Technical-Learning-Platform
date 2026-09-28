@@ -1,0 +1,25 @@
+Evaluating LSTM Model...
+
+--- PREDICTION RANGES ---
+Success Range : 0.422 -> 0.927
+Time Range    : 0.194 -> 0.291
+Attempts Range: 0.727 -> 2.364
+
+--- STANDARD DEVIATION CHECKS ---
+Success Mean: 0.749
+Success Std : 0.146 (Expect > 0.15)
+Time Std    : 0.014 (Expect > 0.2)
+Attempts Std: 0.382 (Expect > 0.2)
+
+--- DERIVED SKILL RANGE ---
+Skill Range: 0.169 -> 0.945
+
+--- USER SEPARATION ---
+Beginner (Bottom 30%): 30
+Intermediate (Middle 40%): 40
+Advanced (Top 30%): 30
+
+--- SAMPLE USER PREDICTIONS ---
+User usr_001 Avg Derived Skill: 0.626
+User usr_002 Avg Derived Skill: 0.776
+User usr_003 Avg Derived Skill: 0.609
