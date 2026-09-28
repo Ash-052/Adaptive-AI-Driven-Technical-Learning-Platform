@@ -4,7 +4,8 @@ pydantic
 pydantic-settings
 supabase
 python-dotenv==1.0.1
-torch>=2.6.0
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.6.0+cpu
 scikit-learn
 pandas
 numpy
