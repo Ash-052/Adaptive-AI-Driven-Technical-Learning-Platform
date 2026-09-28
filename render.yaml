@@ -9,7 +9,5 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9
-      - key: CODE_EXECUTION_ENABLED
-        value: "true"
       - key: JUDGE0_API_URL
         value: https://ce.judge0.com

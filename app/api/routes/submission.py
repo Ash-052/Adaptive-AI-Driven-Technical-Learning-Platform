@@ -4,7 +4,6 @@ from app.db.supabase import supabase
 from app.services.code_execution_service import execute_user_code
 from app.services.topic_mastery_service import update_mastery
 from app.services.skill_service import update_global_skill
-from app.core.config import get_settings
 from datetime import datetime
 import json
 
@@ -21,9 +20,6 @@ async def submit_code(request: SubmissionRequest):
     """
     Executes user code, calculates accuracy, and saves results to DB.
     """
-    if not get_settings().CODE_EXECUTION_ENABLED:
-        raise HTTPException(status_code=503, detail="Code execution is disabled on this deployment.")
-
     try:
         # 1. Fetch Problem
         prob_res = supabase.table('problems').select('*').eq('id', request.problem_id).single().execute()

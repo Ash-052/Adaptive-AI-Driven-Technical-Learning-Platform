@@ -7,7 +7,6 @@ class Settings(BaseSettings):
     SUPABASE_URL: str = "https://placeholder.supabase.co"
     SUPABASE_KEY: str = "placeholder"
     OPENAI_API_KEY: str = ""
-    CODE_EXECUTION_ENABLED: bool = True
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
