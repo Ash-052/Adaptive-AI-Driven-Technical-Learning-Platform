@@ -11,7 +11,7 @@ const LANGUAGE_PRESETS = {
   python: `# Python starter template\n# Read the problem statement and implement your solution below.\n\ndef solution(nums):\n    # Write your logic here\n    return nums\n`,
   javascript: `// JavaScript starter template\n// Read the problem statement and implement your solution below.\n\nfunction solution(nums) {\n  // Write your logic here\n  return nums;\n}\n\n// Example input/output handling\n// const fs = require('fs');\n// const input = fs.readFileSync(0, 'utf8').trim();\n// console.log(solution(JSON.parse(input)));\n`,
   cpp: `#include <bits/stdc++.h>\nusing namespace std;\n\n// C++ starter template\n// Read the problem statement and implement your solution below.\n\nint solution(vector<int> nums) {\n    // Write your logic here\n    return 0;\n}\n\nint main() {\n    return 0;\n}\n`,
-  c: `#include <stdio.h>\n\n// C starter template\n// Read the problem statement and implement your solution below.\n\nint solution(int nums[]) {\n    // Write your logic here\n    return 0;\n}\n\nint main() {\n    return 0;\n}\n`,
+  c: `#include <stdio.h>\n\n// C starter template\n// Read the problem statement and implement your solution below.\n\nint solution(int nums[], int length) {\n    // Write your logic here\n    return 0;\n}\n\nint main() {\n    return 0;\n}\n`,
   java: `// Java starter template\n// Read the problem statement and implement your solution below.\n\npublic class Main {\n    public static int solution(int[] nums) {\n        // Write your logic here\n        return 0;\n    }\n\n    public static void main(String[] args) {\n        // Test your solution here\n    }\n}\n`,
 };
 

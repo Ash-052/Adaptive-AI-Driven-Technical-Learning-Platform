@@ -128,7 +128,11 @@ The repository includes a `render.yaml` Blueprint that builds the React frontend
 1. Open [Render Blueprints](https://dashboard.render.com/blueprints) and create a Blueprint from this repository.
 2. Apply the Blueprint and wait for the service health check to pass. Render will show the public URL.
 
-The public preview disables code submissions because the built-in executor is not isolated from the server. Do not enable it until an isolated execution provider is integrated. The free web service may sleep while idle, and its local SQLite filesystem is temporary; add `SUPABASE_URL` and `SUPABASE_KEY` in the Render dashboard for persistent accounts and progress. Add `OPENAI_API_KEY` to enable AI tutor features.
+Submissions are sent to Judge0 CE for sandboxed execution with CPU, wall-time, and memory limits and network access disabled. Judge0's public endpoint may enforce rate limits; set `JUDGE0_API_URL` to a managed Judge0 endpoint if needed. The free Render service may sleep while idle, and its local SQLite filesystem is temporary; add `SUPABASE_URL` and `SUPABASE_KEY` for persistent accounts and progress. Add `OPENAI_API_KEY` to enable AI tutor features.
+
+## Deploy Frontend to Vercel
+
+The Vercel project root is `frontend`. Set the Production environment variable `VITE_API_BASE_URL` to `https://adaptive-learning-platform-omt2.onrender.com/api/v1`, then redeploy. The `frontend/vercel.json` rewrite serves React routes such as `/register` directly.
 
 ---
 
