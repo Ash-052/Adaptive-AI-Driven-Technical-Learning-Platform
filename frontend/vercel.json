@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/v1/:path*",
-      "destination": "https://adaptive-learning-platform.onrender.com/api/v1/:path*"
+      "destination": "https://adaptive-learning-platform-omt2.onrender.com/api/v1/:path*"
     },
     {
       "source": "/(.*)",
