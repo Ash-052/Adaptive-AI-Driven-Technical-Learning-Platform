@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { BarChart3, TrendingUp, Award, Play, Zap, Target, Loader2, AlertCircle, LogOut, Flame, Trophy, Clock, Search, History, PieChart } from 'lucide-react';
+import { BarChart3, TrendingUp, Award, Play, Zap, Target, Loader2, AlertCircle, LogOut, Flame, Trophy, Clock, Search, History, PieChart, User, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { api } from '../api/api';
 import { SkillBar, RecommendationCard, StatCard, ActivityFeed } from '../components/Common';
@@ -12,6 +12,10 @@ const Dashboard = () => {
   const [isNewUser, setIsNewUser] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [profileEditorOpen, setProfileEditorOpen] = useState(false);
+  const [profileForm, setProfileForm] = useState({ username: '', email: '' });
+  const [profileSaving, setProfileSaving] = useState(false);
+  const [profileError, setProfileError] = useState(null);
 
   const userId = localStorage.getItem('user_id');
 
@@ -27,6 +31,7 @@ const Dashboard = () => {
         ]);
 
         setProfile(profileRes.data);
+        setProfileForm({ username: profileRes.data.username || '', email: profileRes.data.email || '' });
         setRecommendation(recRes.data);
         setMastery(progressRes.data.topic_mastery);
         setIsNewUser(progressRes.data.is_new_user);
@@ -44,6 +49,21 @@ const Dashboard = () => {
   const handleLogout = () => {
     localStorage.clear();
     window.location.href = '/login';
+  };
+
+  const handleProfileSave = async (event) => {
+    event.preventDefault();
+    setProfileSaving(true);
+    setProfileError(null);
+    try {
+      const response = await api.updateProfile(profileForm);
+      setProfile(response.data.profile);
+      setProfileEditorOpen(false);
+    } catch (err) {
+      setProfileError(err.response?.data?.detail || 'Could not save account details.');
+    } finally {
+      setProfileSaving(false);
+    }
   };
 
   if (loading) {
@@ -64,8 +84,6 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100 p-6 md:p-12 font-sans">
       <div className="max-w-7xl mx-auto">
-        
-        {/* Top Navbar */}
         <nav className="flex justify-between items-center mb-16">
           <div className="flex items-center space-x-4">
              <div className="w-12 h-12 bg-gradient-to-tr from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center font-black text-xl shadow-lg shadow-blue-500/20">
@@ -81,6 +99,9 @@ const Dashboard = () => {
             <Link to="/history" className="text-gray-400 hover:text-white transition-colors">
               <History size={20} />
             </Link>
+            <button onClick={() => setProfileEditorOpen(true)} title="Edit account details" aria-label="Edit account details" className="text-gray-400 hover:text-white transition-colors">
+              <User size={20} />
+            </button>
             <div className="h-6 w-[1px] bg-gray-800"></div>
             <button onClick={handleLogout} className="text-gray-500 hover:text-red-400 transition-colors">
               <LogOut size={20} />
@@ -88,7 +109,6 @@ const Dashboard = () => {
           </div>
         </nav>
 
-        {/* Hero Section */}
         <header className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
           <div className="max-w-2xl">
             <div className="flex items-center space-x-2 text-blue-500 mb-4">
@@ -100,14 +120,13 @@ const Dashboard = () => {
               <span className="text-gray-700">Arena</span>
             </h1>
           </div>
-          
+
           <Link to="/arena" className="group flex items-center space-x-4 bg-white text-black px-10 py-6 rounded-3xl font-black transition-all hover:scale-105 hover:bg-blue-500 hover:text-white active:scale-95 shadow-2xl shadow-white/5">
             <Play size={24} fill="currentColor" />
             <span className="text-lg">ENTER ARENA</span>
           </Link>
         </header>
 
-        {/* Gamification Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           <StatCard icon={Flame} label="Daily Streak" value={`${profile?.streak} Days`} subValue="Keep it up!" color="orange" />
           <StatCard icon={Trophy} label="Experience Points" value={profile?.xp} subValue={`${100 - (profile?.xp % 100)} to next level`} color="yellow" />
@@ -116,14 +135,10 @@ const Dashboard = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
-          {/* Main Content Area */}
           <div className="lg:col-span-8 space-y-8">
-            
-            {/* Recommendation & Insights */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                {recommendation && (
-                 <RecommendationCard 
+                 <RecommendationCard
                    topic={recommendation.next_topic}
                    difficulty={recommendation.next_difficulty}
                    confidence={recommendation.confidence ?? 0}
@@ -131,14 +146,13 @@ const Dashboard = () => {
                  />
                )}
 
-               <motion.div 
+               <motion.div
                  whileHover={{ scale: 1.02 }}
                  className="bg-gray-900 border border-gray-800 rounded-3xl p-8 flex flex-col justify-between"
                >
                  <div>
                    <h3 className="text-xl font-black text-white mb-2">Smart Insights</h3>
                    <p className="text-xs text-gray-500 font-bold uppercase tracking-widest mb-6">AI Evaluation</p>
-                   
                    <div className="space-y-4">
                      <div className="flex items-center space-x-3 text-sm text-gray-300 bg-gray-800/40 p-3 rounded-2xl">
                         <Award className="text-yellow-500" size={16} />
@@ -160,7 +174,6 @@ const Dashboard = () => {
                </motion.div>
             </div>
 
-            {/* Mastery Visualization */}
             <div className="bg-gray-900 border border-gray-800 rounded-3xl p-10">
                <div className="flex items-center justify-between mb-12">
                  <div className="flex items-center space-x-4">
@@ -176,7 +189,7 @@ const Dashboard = () => {
 
                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10">
                  {Object.entries(mastery).map(([topic, level]) => (
-                   <SkillBar 
+                   <SkillBar
                      key={topic}
                      label={topic.replace('_', ' ').toUpperCase()}
                      percentage={level}
@@ -187,7 +200,6 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Sidebar Area */}
           <div className="lg:col-span-4 space-y-8">
              <div className="bg-gray-900 border border-gray-800 rounded-3xl p-8">
                 <div className="flex items-center justify-between mb-8">
@@ -212,9 +224,33 @@ const Dashboard = () => {
                 <Trophy className="absolute bottom-[-20px] right-[-20px] opacity-10 group-hover:scale-110 transition-transform" size={160} />
              </div>
           </div>
-
         </div>
       </div>
+
+      {profileEditorOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" role="presentation" onClick={() => setProfileEditorOpen(false)}>
+          <section role="dialog" aria-modal="true" aria-labelledby="account-title" className="w-full max-w-md rounded-2xl border border-gray-700 bg-gray-900 p-6 shadow-2xl" onClick={(event) => event.stopPropagation()}>
+            <div className="mb-6 flex items-center justify-between">
+              <h2 id="account-title" className="text-xl font-bold text-white">Account details</h2>
+              <button type="button" onClick={() => setProfileEditorOpen(false)} aria-label="Close" className="text-gray-400 hover:text-white"><X size={20} /></button>
+            </div>
+            <form onSubmit={handleProfileSave} className="space-y-4">
+              <label className="block text-sm text-gray-300">
+                Username
+                <input required maxLength={50} value={profileForm.username} onChange={(event) => setProfileForm({ ...profileForm, username: event.target.value })} className="mt-2 w-full rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-white focus:border-blue-500 focus:outline-none" />
+              </label>
+              <label className="block text-sm text-gray-300">
+                Email
+                <input required type="email" value={profileForm.email} onChange={(event) => setProfileForm({ ...profileForm, email: event.target.value })} className="mt-2 w-full rounded-lg border border-gray-700 bg-gray-950 px-3 py-2 text-white focus:border-blue-500 focus:outline-none" />
+              </label>
+              {profileError && <p role="alert" className="text-sm text-red-400">{profileError}</p>}
+              <button disabled={profileSaving} className="w-full rounded-lg bg-blue-600 px-4 py-3 font-bold text-white hover:bg-blue-500 disabled:opacity-50">
+                {profileSaving ? 'Saving...' : 'Save account details'}
+              </button>
+            </form>
+          </section>
+        </div>
+      )}
     </div>
   );
 };
